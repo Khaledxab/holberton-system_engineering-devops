@@ -7,12 +7,12 @@
 # Deletes the file /var/run/my.pid and terminates itself when receiving a SIGQUIT or SIGTERM 
 
 touch /var/run/dhkscript.pid
-echo "$$" > /var/run/holbertonscript.pid
+echo $$ > /var/run/holbertonscript.pid
 while true;
 do
-  echo "To infinity and beyond"
-  sleep 2
-  trap 'echo "I hate the kill command"; sudo rm /var/run/myscript.pid; exit' SIGTERM
-  trap 'echo "Y U no love me?!"' SIGINT
-  trap 'sudo rm /var/run/my.pid; exit' SIGQUIT
+    trap 'echo "I hate the kill command"; sudo rm /var/run/dhkscript.pid; exit' SIGTERM
+    trap 'echo "Y U no love me?!"' SIGINT
+    trap 'sudo rm /var/run/dhkscript.pid; exit' SIGQUIT
+    echo "To infinity and beyond"
+    sleep 2
 done
