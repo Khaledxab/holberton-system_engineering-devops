@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# bash script allows one ARG & Run WHOAMI
+sudo -u "$1" whoami
