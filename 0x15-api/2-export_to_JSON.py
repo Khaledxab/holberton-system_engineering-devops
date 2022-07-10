@@ -1,41 +1,26 @@
 #!/usr/bin/python3
-
-"""
-Python script that exports data in the JSON format.
-"""
-
-from requests import get
-from sys import argv
+"""extend task 0"""
 import json
+import requests
+from sys import argv
+
 
 if __name__ == "__main__":
-    response = get('https://jsonplaceholder.typicode.com/todos/')
-    data = response.json()
-
-    row = []
-    response2 = get('https://jsonplaceholder.typicode.com/users')
-    data2 = response2.json()
-
-    for i in data2:
-        if i['id'] == int(argv[1]):
-            u_name = i['username']
-            id_no = i['id']
-
-    row = []
-
-    for i in data:
-
-        new_dict = {}
-
-        if i['userId'] == int(argv[1]):
-            new_dict['username'] = u_name
-            new_dict['task'] = i['title']
-            new_dict['completed'] = i['completed']
-            row.append(new_dict)
-
-    final_dict = {}
-    final_dict[id_no] = row
-    json_obj = json.dumps(final_dict)
-
-    with open(argv[1] + ".json",  "w") as f:
-        f.write(json_obj)
+    employee_id = argv[1]
+    api_url = 'https://jsonplaceholder.typicode.com'
+    user_url = '{}/users/{}'.format(api_url, employee_id)
+    todos_user_url = '{}/todos?userId={}'.format(api_url, employee_id)
+    r_employee = requests.get(user_url).json()
+    r_todos_employee = requests.get(todos_user_url).json()
+    tasks_list = []
+    for task in r_todos_employee:
+        task_dict = {
+            "task": task.get("title"),
+            "completed": task.get("completed"),
+            "username": r_employee.get("username")
+        }
+        tasks_list.append(task_dict)
+    json_dict = {employee_id: tasks_list}
+    filename = '{}.json'.format(employee_id)
+    with open(filename, 'w') as jsonfile:
+        json.dump(json_dict, jsonfile)
