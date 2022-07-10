@@ -1,8 +1,6 @@
 #!/usr/bin/python3
+"""export data in the JSON format"""
 
-"""
-Python script that exports data in the JSON format.
-"""
 
 from requests import get
 import json
@@ -33,7 +31,7 @@ if __name__ == "__main__":
 
         new_dict1[j['id']] = row
 
-    with open("todo_all_employees.json",  "w") as f:
+    with open("todo_all_employees.json", "w") as f:
 
         json_obj = json.dumps(new_dict1)
         f.write(json_obj)
